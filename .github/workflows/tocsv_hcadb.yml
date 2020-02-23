@@ -1,0 +1,30 @@
+name: Auto Convert HCADB to CSV
+
+on:
+  push:
+    branches: 
+      - tocsv_hcadb
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Create HCADB CSV file
+      run: |
+        python tocsv_hcadb.py hcadb.html
+    - name: Auto committing auto-generated files
+      uses: stefanzweifel/git-auto-commit-action@v3.0.0
+      with:
+        commit_message: "Github Action: Auto Generated HCADB CSV File"
+        branch: ${{ github.ref }}
