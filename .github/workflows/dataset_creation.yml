@@ -1,0 +1,43 @@
+name: Auto Create Dataset Files
+
+on:
+  push:
+    branches: 
+      - dataset_creation
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Importing tocsv_hcadb branch
+      uses: actions/checkout@v2
+      with:
+        ref: tocsv_hcadb
+        path: tocsv_hcadb
+    - name: Importing tocsv_scop branch
+      uses: actions/checkout@v2
+      with:
+        ref: tocsv_scop
+        path: tocsv_scop
+    - name: Create Datasets
+      run: |
+        ls tocsv_scop/*.csv | xargs -L 1 python dataset_creator.py tocsv_hcadb/hcadb.csv
+    - name: Removing imported branches
+      run: |
+        rm -rf tocsv_hcadb tocsv_scop
+    - name: Auto committing auto-generated datasets
+      uses: stefanzweifel/git-auto-commit-action@v3.0.0
+      with:
+        commit_message: "Github Action: Auto Generated Dataset Files"
+        branch: ${{ github.ref }}
