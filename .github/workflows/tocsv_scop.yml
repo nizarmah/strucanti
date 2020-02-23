@@ -1,0 +1,30 @@
+name: Auto Convert SCOP Files to CSV
+
+on:
+  push:
+    branches: 
+      - tocsv_scop
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Create CSV SCOP Files
+      run: |
+        ls *.fa | xargs -L 1 python scop_reader.py
+    - name: Auto committing auto-generated files
+      uses: stefanzweifel/git-auto-commit-action@v3.0.0
+      with:
+        commit_message: "Github Action: Auto Generated SCOP CSV Files"
+        branch: ${{ github.ref }}
