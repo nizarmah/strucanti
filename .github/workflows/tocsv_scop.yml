@@ -22,7 +22,7 @@ jobs:
         pip install -r requirements.txt
     - name: Create CSV SCOP Files
       run: |
-        ls *.fa | xargs -L 1 python scop_reader.py
+        ls *.fa | xargs -L 1 python tocsv_scop.py
     - name: Auto committing auto-generated files
       uses: stefanzweifel/git-auto-commit-action@v3.0.0
       with:
