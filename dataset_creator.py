@@ -67,11 +67,11 @@ class EncodedSequenceEnumerator(object):
 		return row
 
 
-def create_dataset(scop_path, hcadb_path):
+def create_dataset(hcadb_path, scop_path):
 	"""
 	Creates DataSet from 
-	- SCOPe Sequence Set Path
 	- Dictionary Path
+	- SCOPe Sequence Set Path
 	"""
 	scop_df = pd.read_csv(scop_path)
 	hcadb_df = pd.read_csv(hcadb_path)
@@ -115,4 +115,4 @@ if __name__ == '__main__':
 	except:
 		print('Error : Missing Arguments')
 		print('Usage : python ', path.basename(__file__), 
-			' scop.csv hcadb.csv')
+			' hcadb.csv scop.csv')
