@@ -22,6 +22,7 @@ def flatten_scop_tuple(scop_tuple):
 	scop_list = list(scop_tuple)
 
 	scop_list[5] = scop_list[5].replace('\n', '')
+	scop_list[5] = scop_list[5].lower()
 
 	return ','.join(scop_list) + '\n'
 
