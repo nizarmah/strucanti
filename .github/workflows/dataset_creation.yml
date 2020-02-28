@@ -30,11 +30,11 @@ jobs:
       with:
         ref: tocsv_scop
         path: tocsv_scop
+    - name: Printing CPU Info
+      run: lscpu | grep -E '^Thread|^Core|^Socket|^CPU\('
     - name: Create Datasets
       run: |
         ls tocsv_scop/*.csv | xargs -L 1 python dataset_creator.py tocsv_hcadb/hcadb.csv
-
-        lscpu | grep -i '^CPU(s):'
     - name: Removing imported branches
       run: |
         rm -rf tocsv_hcadb tocsv_scop
