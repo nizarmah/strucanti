@@ -169,7 +169,7 @@ def start_script():
 	scop_path = sys.argv[2]
 
 	if sys.argv[1] == '--processes':
-		num_processes = sys.argv[2]
+		num_processes = int(sys.argv[2])
 
 		hcadb_path = sys.argv[3]
 		scop_path = sys.argv[4]
