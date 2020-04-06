@@ -68,9 +68,10 @@ class SCOP(object):
 		starting_index = (self.chunksize * process_id)
 		next_starting_index = (self.chunksize * (process_id + 1))
 
-		return self.df.iloc[starting_index:] \
+		return (self.df.iloc[starting_index:] \
 				if ((process_id + 1) == self.num_processes) \
-					else self.df.iloc[starting_index:next_starting_index]
+					else self.df.iloc[starting_index:next_starting_index])\
+						.copy(deep=True)
 
 class AminoEncoder(object):
 	"""
@@ -128,9 +129,6 @@ def enumerate_sequences(hcadb, scop, process_id):
 	df = scop.get_segment(process_id)
 
 	amino_encoder = AminoEncoder()
-
-	# drop all entries that contain 'x' in their sequence
-	df = df[[ ('x' not in i) for i in df.sequence ]]
 
 	# encode sequences into a new series
 	df['encoded_sequence'] = df.sequence.map(amino_encoder.encode)
