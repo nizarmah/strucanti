@@ -16,6 +16,8 @@ set.thread.count(1)
 dataset_path <- args[1]
 number_features <- as.numeric(args[2])
 
+output_path <- args[3]
+
 # use check.names=FALSE in order to avoid column renaming :
 # 	eg. '3_h' -> 'X3_h'
 dataset <- read.csv(dataset_path, check.names=FALSE)
@@ -31,4 +33,4 @@ mrmr_data <- mRMR.data(data=dataset)
 mrmr <- mRMR.classic(data=mrmr_data, target_indices=c(1),
 			  	feature_count=number_features)
 
-cat(mrmr@feature_names[mrmr@filters$`1`], sep='\n')
+cat(mrmr@feature_names[mrmr@filters$`1`], sep='\n', file=output_path)
