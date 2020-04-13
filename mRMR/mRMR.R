@@ -11,6 +11,8 @@ if (length(args) == 0) {
 	stop()
 }
 
+set.thread.count(1)
+
 dataset_path <- args[1]
 number_features <- as.numeric(args[2])
 
